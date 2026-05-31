@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
  <%
-    response.sendRedirect("login_page.jsp");
+    request.getRequestDispatcher("MainController?action=loginPage").forward(request, response);
     %>
 <html>
     <head>

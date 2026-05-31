@@ -88,6 +88,13 @@
                 border-width: 0.8px;
                 background-color: whitesmoke;
             }
+            .error-msg {
+                color: red;
+                text-align: center;
+                font-style: italic;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
             .submit-area{
                 padding: 10px;
             }
@@ -150,22 +157,24 @@
                             <label>Password</label>
                             <input type="password" placeholder="********" name="txtpassword" required="">
                         </div>
-                        
+                        <%
+                            String msg=(String)request.getAttribute("ERROR");
+                            if(msg!=null){
+                        %>    
+                            <p class="error-msg"> <%= msg %>
+                            </p>
+                        <%
+                            }
+                        %>
                         <div class="submit-area">
                             <button type="submit" class="btn btn-primary">LOG IN</button>
                         </div>
                     </form>
                     <div class="footer">
-                            New to AutoWash Pro? <a href="#">Create An account</a>
+                            New to AutoWash Pro? <a href="Register_page">Create An account</a>
                     </div>
                 </div>          
             </div>
         </div>
-        <%
-           String msg=(String)request.getAttribute("ERROR");
-           if(msg!=null){
-             out.print(msg);
-            }
-        %>
     </body>
 </html>

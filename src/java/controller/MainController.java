@@ -4,12 +4,9 @@
  */
 package controller;
 
-import dao.UserDAO;
-import dto.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,27 +15,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author LOQ
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/LoginController"})
-public class LoginController extends HttpServlet {
-
+public class MainController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response){
+        String url = "login_page.jsp";
         try{
-            String phone=request.getParameter("txtphonenumber");
-            String password=request.getParameter("txtpassword");
-            UserDAO d=new UserDAO();
-            User user=d.getUser(phone, password);
-            if(user==null){
-                String msg="phone number or password is invalid";
-                request.setAttribute("ERROR", msg);
-                request.getRequestDispatcher("login_page.jsp").forward(request, response);
-            }else{
-                if(user.isStatus()){ 
-                request.getSession().setAttribute("USER", user);
-                response.sendRedirect("userDashboard_page.jsp");
-                }else{
-                    response.getWriter().print("access deny!!!");
-                }
-            } 
+            String ac=request.getParameter("action");
+            if(ac==null) ac="loginPage";
+            switch(ac){
+                case "loginPage":
+                    url="login_page.jsp";
+                    break;
+                case "login":
+                    url="LoginController";
+                    break;
+            }
+            request.getRequestDispatcher(url).forward(request, response);
         }catch(Exception e){
             e.printStackTrace();
         }
